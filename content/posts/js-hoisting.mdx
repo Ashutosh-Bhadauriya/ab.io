@@ -1,0 +1,90 @@
+---
+title: JavaScript Hoisting - The way you like it
+description: “HOISTING”, when we hear or read it somewhere the first time, it seems to be such a complex word. At least, that..
+date: "2022-01-12"
+---
+
+
+“HOISTING”, when we hear or read it somewhere the first time, it seems to be such a complex word. At least, that was the case with me. Don’t worry let’s make it easy.
+
+Before going into its details and explanation, let see what the internet says.
+
+MDN Web Docs
+
+> JavaScript Hoisting refers to the process whereby the interpreter appears to move the declaration of functions, variables, or classes to the top of their scope, prior to execution of the code.
+
+W3Schools
+
+> Hoisting is JavaScript's default behavior of moving declarations to the top.
+
+FreeCodeCamp
+
+In JavaScript, hoisting allows you to use functions and variables before they're declared.
+
+So, everyone here says the same thing, the only difference is the choice of words and “YES” they all are correct as well. Am I going to say the same thing? YES and also NO, YES because the definition that you read above is 100% right and NO because I’m going to explain what happens in the background. Let's see the example first before hopping into the explanation.
+
+```typescript
+console.log(foo);
+bar();
+
+var foo = "foo";
+
+function bar() {
+  console.log("bar");
+}
+```
+
+What do you think the output will be? ERROR?? No, there will be no error. The output will be 👇
+
+```typescript
+undefined;
+bar;
+```
+
+Magic isn’t it?? No, there’s not any magic in here, this is how JavaScript works. By the way, the weird thing that happened above is HOISTING in JavaScript. Now let’s also try to access the function bar() instead of calling it and let’s see what happens. What do you think will happen? No, it will not show undefined instead it will show 👇
+
+```typescript
+console.log(foo); //undefined
+console.log(bar); // it will print the whole function
+
+var foo = "foo";
+
+function bar() {
+  console.log("bar");
+}
+```
+
+So, when we try to access the variable it shows us undefined but when we try to access the function it simply prints the whole body of a function. Why the hell did this happen? Well, for understanding this we need to see how JavaScript works behind the scenes, and all the weirdness you saw will start making sense. Don’t worry we’ll not go into much detail, I’ll try to give just a basic idea of it.
+
+Let’s come to the point now, whenever you run your JS Program, an execution context is created. Assume Execution context is like a big box inside which everything takes place. This big box has two components and there is a Memory component and a code component. Inside the memory component, all variables and functions are stored as key-value pairs and inside the code component, the code is executed one line at a time.
+
+![Frame 3.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1641988966471/cekOTu7p66.png align="left")
+
+Memory component is also known as Variable Environment and Code component is also known as Thread of Execution
+
+Execution context is created in two phases, the first phase is the Memory creation phase and the second is the Code execution phase, so even before your code starts executing, memory is allocated to each variable and functions, YES you read it right, this happens even before the execution of the first line of code.
+
+Let’s create the raw execution context for the example we saw above. Yes, this example👇
+
+```typescript
+console.log(foo); //undefined
+console.log(bar); // it will print the whole function
+
+var foo = "foo";
+
+function bar() {
+  console.log("bar");
+}
+```
+
+![Frame 3.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1641989613452/1nE2mHnQo.png align="left")
+
+During the memory creation phase, JavaScript will scan for all variables and functions allocate space for them in the memory component. Till now not a single line of your program has been executed. It will allocate space for the “foo” variable and “bar” function.
+
+When JS allocates memory to the variable it stores a special value to it, i.e., “undefined” and in the case of functions, it stores the whole code of the function. Oh! that's the reason why it gave the whole copy of the function in the console when we tried to access it? Yes, you guessed it right.
+
+Remember that till now not even a single line of your code has been executed. This is how it will look after the memory is allocated to both “foo”(variable) & “bar”(function).
+
+Now the dots will start connecting, let’s come to code again. As the code execution phase begins, the first line console.log(foo) gets executed and as memory has already been allocated to the variable foo before the code execution phase with the special “undefined” value inside it, it prints undefined, and similarly, when we try to access the function it prints the whole code of the function, as the work of memory allocation has already been done in the memory creation phase.
+
+Yes. this is it. Now I’m sure you must have understood the term HOISTING and will never forget it again. From now onwards if someone asks, What is HOISTING? Explain this instead of those boring definitions. Also, try playing around with Chrome Debugger to get a better picture of this.

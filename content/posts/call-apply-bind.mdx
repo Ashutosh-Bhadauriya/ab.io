@@ -1,0 +1,134 @@
+---
+title: Call(), Apply(), Bind() in JavaScript
+description: I had a plan to directly jump on to explanations but read somewhere, you need to tell a story first in your blog to grab the..
+date: "2022-01-15"
+---
+
+I had a plan to directly jump on to explanations but read somewhere, you need to tell a story first in your blog to grab the attention of your audience, have been trying to think of a story for the last 8 hours, but no success till now😶. Thought why not make the explanation so interesting that you don't need any story👀, so let's start..
+
+As usual, before jumping to the actual explanation we'll see what the official docs have to say
+
+## Call()
+
+**MDN Web Docs**
+
+> The call() method calls a function with a given this value and arguments provided individually.
+
+%[https://media.giphy.com/media/tLql6mMHC6wvK/giphy.gif] 
+
+I swear I didn't get a thing when I read it at first. No worries, this won't happen to you. Enough talking, let's understand it
+
+Have a look at the code below👇
+
+```typescript
+function blockchain() {
+  console.log("Ethereum");
+}
+
+blockchain(); //Ethereum
+blockchain.call(); //Ethereum
+```
+
+The output in both cases is "Ethereum" because when you call any function in JavaScript, by default it gets converted to functionName.call() (This is what happens behind the scenes). Every function has access to a property call, which is used to invoke that function. So, what's the difference and why do we even need call() then?
+
+Let's see one more example
+
+```typescript
+let blockchain = {
+    name: "Ethereum",
+    printDetail: function () {
+    console.log("The blockchain is " + this.name);
+  },
+};
+
+blockchain.printDetail();   //The blockchain is Ethereum
+```
+
+It works as expected. By the way, for those who don't know what "THIS" keyword is, THIS refers to the object it belongs to. Details [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this).
+
+Now suppose we have one more object, call it otherBlockchain👇
+
+```typescript
+let otherBlockchain = {
+  name: "Solana",
+ };
+```
+
+Now if we want to print this again like the previous one, what should we do, create a function again in 'otherBlockchain' object? No, this won't be right due to code repetition. Then what should we do? We should try to find some way to use printDetail() function of the 'blockchain' object. This is where call() method comes to the rescue. With help of it, we can borrow function from one object and use it with another object.
+
+Let's see how can we do that👇
+
+```typescript
+blockchain.printDetail.call(otherBlockchain); // The blockchain is Solana
+```
+
+The above line of code means, we want to take printDetail() function from object1 (blockchain) and use the data from object2 (otherBlockchain).
+
+Generally, we don't do like this, we create a separate function and use them in the objects👇
+
+```typescript
+let printDetail() = function() {
+  console.log("The blockchain is " + this.name);
+}
+
+let blockchain = {
+  name: "Ethereum",  
+};
+
+printDetail.call(blockchain) //The blockchain is Ethereum 
+
+let otherBlockchain = {
+  name: "Solana",
+ };
+
+printDetail.call(otherBlockchain) //The blockchain is Solana
+```
+
+Now suppose we have two parameters in printDetail() function
+
+```typescript
+let printDetail() = function(founder, year) {
+  console.log("The blockchain is " + this.name + "  founded by " + founder + " in " + year);
+}
+```
+
+How we will pass arguments to printDetail() function while invoking it? Like this👇
+
+```typescript
+printDetail.call(blockchain, "Vitalik Buterin", 2015) //The blockchain is Ethereum founded by Vitalik Buterin in 2015
+```
+
+The first argument will always be the reference to this variable (the object to which we want to attach the function) and the arguments after that can be the arguments to the function. This was all about call().
+
+## Apply()
+
+MDN Web Docs
+
+> The apply() method calls a function with a given this value, and arguments provided as an array
+
+Apply() is exactly similar to the call() we saw above, the only difference is the way we pass arguments.👇
+
+```typescript
+printDetail.call(blockchain, ["Vitalik Buterin", 2015]) //The blockchain is Ethereum founded by Vitalik Buterin in 2015
+```
+
+Here, we have passed the arguments to the function in an ArrayList. Yes, this is the only difference between the two.
+
+## Bind()
+
+MDN Web Docs
+
+> The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.
+
+Bind() method also looks exactly like the call() method, but the catch here is, instead of calling the function directly, it binds the method with the object and returns the copy of the method.
+
+```typescript
+
+let blockchainDetail = printDetail.call(blockchain, "Vitalik Buterin", 2015) ;
+
+blockchainDetail(); //The blockchain is Ethereum founded by Vitalik Buterin in 2015
+```
+
+It has created the copy of printDetail() function, bound that to 'blockchain' object, and returned a function.
+
+I hope, I was able to explain this. If you still have any doubts, please comment. We'll meet again with some more interesting stuff. Till then 👋
