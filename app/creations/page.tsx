@@ -7,10 +7,10 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div>
+    <div className="mx-10">
       <div>
         <h2
-          className={`text-6xl ${merriweather_sans.className} font-extrabold mb-6`}
+          className={`text-4xl sm:text-6xl ${merriweather_sans.className} font-extrabold mb-6`}
         >
           My creations
         </h2>

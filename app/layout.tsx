@@ -38,7 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                       priority
                     />
                   </Link>
-                  <nav className="text-sm font-medium space-x-6 ml-8">
+                  <nav className="sm:text-sm text-xs font-medium sm:space-x-6 space-x-3 ml-4 sm:ml-8">
                     <Link href="/creations">Creations</Link>
                     <Link href="/posts">Writings</Link>
                   </nav>

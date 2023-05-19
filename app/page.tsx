@@ -6,14 +6,16 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
-      <div className="max-w-2xl mt-8">
+    <div className="mx-10">
+      <div className="max-w-2xl sm:mt-8 mt-4">
         <h2
-          className={`text-6xl ${merriweather_sans.className} font-extrabold`}
+          className={`text-4xl sm:text-6xl ${merriweather_sans.className} font-extrabold`}
         >
           Ashutosh Bhadauriya
         </h2>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-6 text-sm">In process of building cool shit ✨</p>
+        <p className="text-zinc-600 dark:text-zinc-400 mb-6 text-sm">
+          In process of building cool shit ✨
+        </p>
         <p className="mt-6 text-base">
           Hi! I&apos;m Ashutosh, currently dwelling at the intersection of
           curiosity and creativity - laughing, learning, and passionately
@@ -25,7 +27,7 @@ export default function Home() {
           <TwitterIcon className="dark:fill-zinc-400" />
         </Link>
         <Link href="https://github.com/Ashutosh-Bhadauriya" target="_blank">
-          <GithubIcon className="dark:fill-zinc-400"/>
+          <GithubIcon className="dark:fill-zinc-400" />
         </Link>
         <Link
           href="https://www.linkedin.com/in/ashutosh-bhadauriya-b117431a9/"

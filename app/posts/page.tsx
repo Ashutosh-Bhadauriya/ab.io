@@ -2,8 +2,7 @@ import { allPosts } from "@/.contentlayer/generated";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { merriweather_sans } from "@/lib/font";
-import { compareDesc } from "date-fns"
-
+import { compareDesc } from "date-fns";
 
 export const metadata = {
   title: "Writings",
@@ -18,9 +17,9 @@ export default function Posts() {
     });
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="mb-12">
+      <div className="mb-12 mx-10 sm:mx-0">
         <h2
-          className={`text-6xl font- mb-6 ${merriweather_sans.className} font-extrabold`}
+          className={`text-4xl sm:text-6xl mb-6 ${merriweather_sans.className} font-extrabold`}
         >
           My 2 cents
         </h2>
@@ -44,8 +43,11 @@ export default function Posts() {
                   </p>
                 )}
               </Link>
+              <div className="mt-1 md:hidden relative z-10 order-first mb-3 flex items-center text-sm text-zinc-400">
+                {post.date && <p>{formatDate(post.date)}</p>}
+              </div>
             </div>
-            <div className="mt-1 md:block relative z-10 order-first mb-3 flex items-center text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="mt-1 hidden md:block relative z-10 order-first mb-3 text-sm text-zinc-400">
               {post.date && <p>{formatDate(post.date)}</p>}
             </div>
           </article>
