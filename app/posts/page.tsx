@@ -6,7 +6,7 @@ import { compareDesc } from "date-fns"
 
 
 export const metadata = {
-  title: "Posts",
+  title: "Writings",
   description: "All the blog posts",
 };
 

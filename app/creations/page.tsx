@@ -1,5 +1,10 @@
 import { merriweather_sans } from "@/lib/font";
 
+export const metadata = {
+  title: "Creations",
+  description: "Ashutosh Bhadauriya's projects",
+}
+
 export default function Home() {
   return (
     <div>
